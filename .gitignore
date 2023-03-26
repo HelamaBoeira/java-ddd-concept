@@ -4,6 +4,10 @@
 # JetBrains IDE
 .idea/
 
+target/
+dist/
+build/
+
 # Log file
 *.log
 

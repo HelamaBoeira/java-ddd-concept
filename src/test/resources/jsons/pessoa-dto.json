@@ -1,0 +1,14 @@
+{
+  "nome": "Pessoa Nova",
+  "sexo": "Feminino",
+  "dataNasc": "2001-02-19",
+  "idade": 21,
+  "endereco": {
+    "cep" : "59054118",
+    "logradouro": "Avenida 117",
+    "cidade": "Nova Mombasa",
+    "estado": "CE",
+    "complemento": "",
+    "numero": 45
+  }
+}
