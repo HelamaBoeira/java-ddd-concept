@@ -1,15 +1,19 @@
 package com.desafio.application.dtos;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.UUID;
+import java.time.Period;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PessoaDTO {
     private UUID id;
     private String nome;
@@ -17,5 +21,6 @@ public class PessoaDTO {
     private LocalDate dataNasc;
     private Integer idade;
 
-    private EnderecoDTO endereco;
+    private EnderecoDTO endereco = new EnderecoDTO();
+
 }

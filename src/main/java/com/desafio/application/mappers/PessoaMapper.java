@@ -5,7 +5,6 @@ import com.desafio.application.dtos.PessoaDTO;
 import com.desafio.domain.entity.Endereco;
 import com.desafio.domain.entity.Pessoa;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.List;
 

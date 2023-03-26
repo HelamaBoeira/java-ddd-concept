@@ -10,8 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 import javax.faces.webapp.FacesServlet;
-import javax.servlet.ServletContext;
-import java.util.Arrays;
 
 @SpringBootApplication
 public class CadastroApplication {
