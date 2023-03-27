@@ -1,4 +1,4 @@
-package com.desafio.application.integration;
+package com.desafio.presentation.api.integration;
 
 import com.desafio.AbstractIntegrationTests;
 import com.desafio.GenerateUtils;

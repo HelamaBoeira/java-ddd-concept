@@ -5,22 +5,19 @@ import com.desafio.application.dtos.PessoaDTO;
 import com.desafio.presentation.bean.utils.DateUtils;
 import lombok.Getter;
 import lombok.Setter;
-import org.primefaces.component.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Named(value = "pessoaMB")
 @ViewScoped
-public class PessoaMB {
+public class PessoaMB extends BaseMB{
 
     @Getter
     @Setter
@@ -35,35 +32,50 @@ public class PessoaMB {
     private PessoaApplication application;
 
     @PostConstruct
-    private List<PessoaDTO> carregar(){
+    public void carregar(){
         pessoas = application.getAll();
-        return pessoas;
     }
 
     public void novoCadastro() throws IOException {
+
         limpar();
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Teste"));
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        ec.redirect(ec.getRequestContextPath() + "/cadastro.xhtml");
+        chamarForm("/cadastro.xhtml");
     }
 
 
-    public String salvar(){
-        pessoa.getEndereco().setCep(pessoa.getEndereco().getCep().replaceAll("[^a-zA-Z0-9]", ""));
-        pessoa.setDataNasc(DateUtils.stringToLocalDate(dataNascimento));
-        pessoa.setIdade(DateUtils.diffInYears(pessoa.getDataNasc(), LocalDate.now()));
-        application.create(pessoa);
-        limpar();
-        return "deu certo";
+    public void salvar() throws IOException {
+        try {
+            pessoa.getEndereco().setCep(pessoa.getEndereco().getCep().replaceAll("[^a-zA-Z0-9]", ""));
+            pessoa.setDataNasc(DateUtils.stringToLocalDate(dataNascimento));
+            pessoa.setIdade(DateUtils.diffInYears(pessoa.getDataNasc(), LocalDate.now()));
+            if(pessoa.getId() == null){
+                application.create(pessoa);
+
+            }else {
+                application.update(pessoa);
+            }
+            limpar();
+            carregar();
+            chamarForm("/index.xhtml");
+        } catch (Exception e){
+            chamarMensagemErro("Um erro inesperado aconteceu");
+        }
     }
 
-    public void editar(PessoaDTO pessoa){
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Teste"));
+    public void editar(PessoaDTO pessoa) throws IOException {
+        this.pessoa = pessoa;
+        this.dataNascimento = DateUtils.localDateToString(pessoa.getDataNasc());
+        chamarForm("/cadastro.xhtml");
+
+    }
+
+    public void confirmarExclusao(UUID id){
+        application.delete(id);
+        carregar();
     }
 
     private void limpar(){
         pessoa = new PessoaDTO();
+        dataNascimento = "";
     }
 }

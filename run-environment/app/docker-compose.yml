@@ -1,0 +1,27 @@
+version: "3.3"
+services:
+  db_postgres:
+    image: postgres:14.5
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: scarlet
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  app_web:
+    image: desafio-cadastro
+    build: ../../
+    container_name: meu_container
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db_postgres:5432/scarlet
+    depends_on:
+      db_postgres:
+        condition: service_healthy
+    ports:
+      - "9090:8080"  # host:container
+

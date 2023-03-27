@@ -30,7 +30,7 @@ public class CadastroApplication {
 	public ServletContextInitializer servletContextInitializer() {
 		return servletContext -> {
 			servletContext.setInitParameter("com.sun.faces.forceLoadConfiguration", Boolean.TRUE.toString());
-			servletContext.setInitParameter("primefaces.THEME", "redmond");
+			servletContext.setInitParameter("primefaces.THEME", "start");
 		};
 	}
 
