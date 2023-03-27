@@ -6,19 +6,26 @@
         xmlns:p="http://primefaces.org/ui"
         xml:lang="pt"
         xmlns:f="http://xmlns.jcp.org/jsf/core">
-
-
 <h:head>
+    <title>Pessoas</title>
 </h:head>
 
 <h:body style="margin-left:50px">
-    <h2>Listagem de Pessoas Cadastradas</h2>
-    <h:form id="formAlunos" prependId="false">
-        <p:commandButton value="Novo" action="#{pessoaMB.novoCadastro}" immediate="true"/>
+    <h:form id="formPessoas" prependId="false">
+        <p:growl id="message" showDetail="true"/>
+        <p:messages id="messages" showDetail="true" closable="true">
+            <p:autoUpdate/>
+        </p:messages>
         <p:dataTable id="listaPessoas" value="#{pessoaMB.pessoas}" var="item" paginator="true"
                      rows="10" emptyMessage="Nenhum registro encontrado">
-
-            <p:column headerText="Nome">
+            <f:facet name="header">
+                <div align="left" > <p>Listagem de Pessoas Cadastradas</p>
+                    <p:commandButton value="Novo"  icon="pi pi-plus" action="#{pessoaMB.novoCadastro}"/>
+                </div>
+            </f:facet>
+            <p:column headerText="Nome" sortBy="#{item.nome}"
+                      filterMatchMode="contains"
+                      filterBy="#{item.nome}">
                 <h:outputText id="outputNome"
                               value="#{item.nome}"/>
             </p:column>
@@ -38,12 +45,50 @@
             <p:column headerText="Estado">
                 <h:outputText value="#{item.endereco.estado}" />
             </p:column>
-            <p:column headerText="Ações">
+            <p:column headerText="Ações" width="8%">
                 <p:commandButton icon="pi pi-pencil" action="#{pessoaMB.editar(item)}" />
-                <p:commandButton icon="pi pi-eye" action="#{pessoaBean.visualizar(item)}" />
-                <p:commandButton icon="pi pi-trash" actionListener="#{pessoaBean.confirmarExclusao(item)}" />
+                <p:commandButton icon="pi pi-eye" update=":formPessoas:pessoaDetail" oncomplete="PF('itemDialog').show()">
+                    <f:setPropertyActionListener value="#{item}" target="#{pessoaMB.pessoa}"/>
+                </p:commandButton>
+                <p:commandButton icon="pi pi-trash" action="#{pessoaMB.confirmarExclusao(item.id)}"
+                                 update="message listaPessoas">
+                    <p:confirm header="Confirmação" message="Deixa Excluir esse registro?"
+                               icon="pi pi-exclamation-triangle"/>
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" />
+                </p:confirmDialog>
             </p:column>
         </p:dataTable>
+        <p:dialog header="Detalhes da Pessoa Cadastrada" widgetVar="itemDialog" modal="true"
+                  showEffect="fade" hideEffect="fade"
+                  resizable="false">
+            <p:outputPanel id="pessoaDetail" style="text-align:center;">
+                <p:panelGrid columns="2" rendered="#{not empty pessoaMB.pessoa}" columnClasses="label,value">
+                    <h:outputText value="Nome:" />
+                    <h:outputText value="#{pessoaMB.pessoa.nome}" />
+                    <h:outputText value="Sexo:" />
+                    <h:outputText value="#{pessoaMB.pessoa.sexo}" />
+                    <h:outputText value="Data de Nascimento:" />
+                    <h:outputText value="#{pessoaMB.pessoa.dataNasc}">
+                    </h:outputText>
+                    <h:outputText value="CEP:" />
+                    <h:outputText value="#{pessoaMB.pessoa.endereco.cep}" />
+                    <h:outputText value="Logradouro:" />
+                    <h:outputText value="#{pessoaMB.pessoa.endereco.logradouro}" />
+                    <h:outputText value="Cidade:" />
+                    <h:outputText value="#{pessoaMB.pessoa.endereco.cidade}" />
+                    <h:outputText value="Estado:" />
+                    <h:outputText value="#{pessoaMB.pessoa.endereco.estado}" />
+                    <h:outputText value="Complemento:" />
+                    <h:outputText value="#{pessoaMB.pessoa.endereco.complemento}" />
+                    <h:outputText value="Número:" />
+                    <h:outputText value="#{pessoaMB.pessoa.endereco.numero}" />
+                </p:panelGrid>
+                <p:button id="btnFechar" value="Fechar" icon="ui-icon-plusthick"/>
+            </p:outputPanel>
+        </p:dialog>
     </h:form>
 </h:body>
 </html>
