@@ -1,38 +1,30 @@
-package com.desafio.presentation.bean.controllers.unit;
+package com.desafio.presentation.unit.bean.controllers;
 
 import com.desafio.GenerateUtils;
 import com.desafio.application.apps.interfaces.PessoaApplication;
 import com.desafio.application.dtos.EnderecoDTO;
 import com.desafio.application.dtos.PessoaDTO;
 import com.desafio.presentation.bean.controllers.PessoaMB;
-import com.desafio.presentation.bean.utils.DateUtils;
-import com.sun.faces.config.InitFacesContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class PessoaMBUnitTest extends BaseBeanTest{
+public class PessoaMBUnitTest extends BaseBeanTest {
 
 
     @Mock
@@ -48,8 +40,6 @@ public class PessoaMBUnitTest extends BaseBeanTest{
     @Override
     public void setUp() {
         super.setUp();
-        MockitoAnnotations.initMocks(this);
-
         pessoaDTO = new PessoaDTO();
         pessoaDTO.setId(UUID.randomUUID());
         pessoaDTO.setNome("Teste");

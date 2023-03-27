@@ -1,4 +1,4 @@
-package com.desafio.presentation.bean.controllers.unit;
+package com.desafio.presentation.unit.bean.controllers;
 
 import com.sun.faces.config.InitFacesContext;
 import org.junit.jupiter.api.BeforeEach;
