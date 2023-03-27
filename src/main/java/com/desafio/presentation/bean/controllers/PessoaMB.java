@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -34,7 +32,7 @@ public class PessoaMB extends BaseMB{
     private PessoaApplication application;
 
     @PostConstruct
-    private void carregar(){
+    public void carregar(){
         pessoas = application.getAll();
     }
 
@@ -60,7 +58,7 @@ public class PessoaMB extends BaseMB{
             carregar();
             chamarForm("/index.xhtml");
         } catch (Exception e){
-            chamarMensagem("Um erro inesperado aconteceu");
+            chamarMensagemErro("Um erro inesperado aconteceu");
         }
     }
 

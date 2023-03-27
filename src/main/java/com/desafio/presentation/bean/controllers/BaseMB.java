@@ -11,7 +11,7 @@ public abstract class BaseMB {
         ec.redirect(ec.getRequestContextPath() + path);
     }
 
-    protected void chamarMensagem(String message){
+    protected void chamarMensagemErro(String message){
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 "Error", message));
     }
