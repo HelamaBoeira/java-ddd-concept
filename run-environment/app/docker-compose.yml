@@ -15,7 +15,9 @@ services:
       retries: 5
   app_web:
     image: desafio-cadastro
-    build: ../../
+    build:
+      context:  ../../
+      network: host
     container_name: meu_container
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db_postgres:5432/scarlet
