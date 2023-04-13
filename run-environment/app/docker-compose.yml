@@ -1,4 +1,4 @@
-version: "3.3"
+version: "2.4"
 services:
   db_postgres:
     image: postgres:14.5
@@ -26,4 +26,3 @@ services:
         condition: service_healthy
     ports:
       - "9090:8080"  # host:container
-
